@@ -1,78 +1,86 @@
 const PLAYERS = [
-    'Spooderman',
-    'Shield Boi',
-    'Wonderwoman',
-    'Ballhead',
-    'Visonite',
-    'Clap',
-    'Wasp',
-    'Mask',
-    'Feline',
-    'Sergeant',
-    'Catwoman',
-    'Fish',
-    'Bulk',
-    'Ninja',
-    'Black Boi',
-    'Wolverine',
-    'Thor',
-    'Slayer',
-    'Vader',
-    'Slingo',
-  ];
-  
-  const initPlayers = (players) => {
-    const detailedPlayers = [];
-    players.forEach((a, b) => {
-      detailedPlayers.push({
-        name: a,
-        strength: getRandomStrength(),
-        image: 'images/super-' + (b + 1) + '.png',
-        type: b % 2 == 0 ? 'hero' : 'villain',
-        id: b + 1,
-      });
+  'Spooderman',
+  'Shield Boi',
+  'Wonderwoman',
+  'Ballhead',
+  'Visonite',
+  'Clap',
+  'Wasp',
+  'Mask',
+  'Feline',
+  'Sergeant',
+  'Catwoman',
+  'Fish',
+  'Bulk',
+  'Ninja',
+  'Black Boi',
+  'Wolverine',
+  'Thor',
+  'Slayer',
+  'Vader',
+  'Slingo',
+];
+
+// initialize players with image and strength
+const initPlayers = (players) => {
+  let detailedPlayers = [];
+  // Create players using for loop
+  // Type your code here
+  players.forEach((player, index) => {
+    detailedPlayers.push({
+      name: player,
+      strength: 2 + index,
+      image: 'images/super-' + (index + 1) + '.png',
+      type: index % 2 == 0 ? 'hero' : 'villain',
+      id: index + 1,
     });
-    return detailedPlayers;
-  };
-  
+  });
+  return detailedPlayers;
+};
+
+// getting random strength
 const getRandomStrength = () => {
-    return Math.floor(Math.random() * 100) + 1;
-  };
-  
-  const view = (xyz) => {
-    const player = document.createElement('div');
-    player.classList.add('player');
-    const image = document.createElement('img');
-    image.setAttribute('src', xyz.image);
-    image.setAttribute('alt', '');
-    const name = document.createElement('div');
-    name.className = 'name';
-    name.textContent = xyz.name;
-    const strength = document.createElement('div');
-    strength.textContent = xyz.strength;
-    strength.className = 'strength';
-    player.append(image, name, strength);
-    return player;
-  };
-  
-  const buildPlayers = (players, type) => {
-    const fragment = document.createElement('div');
-    players
-      .filter((player) => player.type == type)
-      .forEach((player) => fragment.append(view(player)));
-    return fragment.innerHTML;
-  
-    
-  };
-  const viewPlayers = (players) => {
-    document.getElementById('heroes').innerHTML = buildPlayers(players, 'hero');
-    document.getElementById('villains').innerHTML = buildPlayers(
-      players,
-      'villain'
-    );
-  };
-  
-  window.onload = () => {
-    viewPlayers(initPlayers(PLAYERS));
-  };
-  
+  // Return a random integer (0,100]
+  // Note: You can use Math.random() and Math.ceil()
+  return Math.ceil(Math.random() * 100);
+};
+
+const view = (playerObj) => {
+  let player = document.createElement('div');
+  player.classList.add('player');
+  let image = document.createElement('img');
+  image.setAttribute('src', playerObj.image);
+  image.setAttribute('alt', '');
+  let name = document.createElement('div');
+  name.className = 'name';
+  name.textContent = playerObj.name;
+  let strength = document.createElement('div');
+  strength.textContent = playerObj.strength;
+  strength.className = 'strength';
+  player.append(image, name, strength);
+  return player;
+};
+
+const buildPlayers = (players, type) => {
+  let fragment = document.createElement('div');
+  players
+    .filter((player) => player.type == type)
+    .forEach((player) => fragment.append(view(player)));
+  return fragment.innerHTML;
+
+  // Loop through players and accumulate HTML template
+  // depending of type of player(hero|villain)
+  // Type your code here
+};
+// Display players in HTML
+const viewPlayers = (players) => {
+  document.getElementById('heroes').innerHTML = buildPlayers(players, 'hero');
+  document.getElementById('villains').innerHTML = buildPlayers(
+    players,
+    'villain'
+  );
+};
+
+window.onload = () => {
+  viewPlayers(initPlayers(PLAYERS));
+};
